@@ -11,7 +11,7 @@ Simple auth API using ASP.NET Core, Clean Architecture, ADO.NET (no EF/Dapper/Me
 
 ## Setup
 1. Copy `.env.example` to `.env` in the repo root and adjust values if needed (never commit `.env`).
-2. Prepare and run the database (see `Database/README.md`).
+2. Prepare and run the database (see `NiceDentist-Database/README.md`).
 3. Start the API from this folder.
 4. Open Swagger and test.
 
@@ -26,7 +26,7 @@ Simple auth API using ASP.NET Core, Clean Architecture, ADO.NET (no EF/Dapper/Me
 Add a user via `POST /api/auth/register` and login to get a token.
 
 ## Docker (API)
-- Prerequisite: Docker Desktop. Ensure the database is running per `Database/README.md`.
+- Prerequisite: Docker Desktop. Ensure the database is running per `NiceDentist-Database/README.md`.
 
 ```powershell
 docker compose up -d --build

@@ -6,7 +6,6 @@ services:
       dockerfile: ./src/NiceDentist.Auth.Api/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=${APP_ENV:-Development}
-      - +
       - Jwt__Key=${JWT_KEY:-dev-secret-change}
       - Jwt__Issuer=${JWT_ISSUER:-NiceDentist}
     ports:

@@ -1,6 +1,6 @@
 # Environment files
 .env
-Database/db.env
+NiceDentist-Database/db.env
 
 # .NET build output
 **/bin/
