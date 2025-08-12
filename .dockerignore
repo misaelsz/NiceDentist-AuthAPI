@@ -20,4 +20,3 @@
 **/*.ldf
 **/*.ndf
 **/*.log
-db-scripts/*.sql

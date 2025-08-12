@@ -1,0 +1,14 @@
+# Environment files
+.env
+Database/db.env
+
+# .NET build output
+**/bin/
+**/obj/
+
+# VS / Rider
+.vs/
+.idea/
+*.user
+*.suo
+*.userprefs

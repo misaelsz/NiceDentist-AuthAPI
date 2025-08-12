@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using NiceDentist.Auth.Application.Auth;
 using NiceDentist.Auth.Application.Contracts;
 using NiceDentist.Auth.Infrastructure;
+using NiceDentist.Auth.Api;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
