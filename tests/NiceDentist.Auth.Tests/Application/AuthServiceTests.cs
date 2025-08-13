@@ -56,7 +56,7 @@ public class AuthServiceTests
     {
         // Arrange
         _mockRepo.Setup(r => r.GetByUsernameAsync("newuser", default))
-               .ReturnsAsync((User?)null);
+               .ReturnsAsync((User)null!);
         _mockRepo.Setup(r => r.GetByEmailAsync("existing@test.com", default))
                .ReturnsAsync(new User { Email = "existing@test.com" });
 
@@ -73,9 +73,9 @@ public class AuthServiceTests
     {
         // Arrange
         _mockRepo.Setup(r => r.GetByUsernameAsync("newuser", default))
-               .ReturnsAsync((User?)null);
+               .ReturnsAsync((User)null!);
         _mockRepo.Setup(r => r.GetByEmailAsync("new@test.com", default))
-               .ReturnsAsync((User?)null);
+               .ReturnsAsync((User)null!);
         _mockRepo.Setup(r => r.CreateAsync(It.IsAny<User>(), default))
                .ReturnsAsync(0); // Simulate failure
 
@@ -92,9 +92,9 @@ public class AuthServiceTests
     {
         // Arrange
         _mockRepo.Setup(r => r.GetByUsernameAsync("newuser", default))
-               .ReturnsAsync((User?)null);
+               .ReturnsAsync((User)null!);
         _mockRepo.Setup(r => r.GetByEmailAsync("new@test.com", default))
-               .ReturnsAsync((User?)null);
+               .ReturnsAsync((User)null!);
         _mockRepo.Setup(r => r.CreateAsync(It.IsAny<User>(), default))
                .ReturnsAsync(1);
 
@@ -133,7 +133,7 @@ public class AuthServiceTests
     {
         // Arrange
         _mockRepo.Setup(r => r.GetByUsernameAsync("nonexistent", default))
-               .ReturnsAsync((User?)null);
+               .ReturnsAsync((User)null!);
 
         // Act
         var (ok, token, message) = await _authService.LoginAsync("nonexistent", "password");
@@ -220,8 +220,8 @@ public class AuthServiceTests
     public async Task Register_Should_Create_User_When_Valid()
     {
         // Arrange
-        _mockRepo.Setup(r => r.GetByUsernameAsync(It.IsAny<string>(), default)).ReturnsAsync((User?)null);
-        _mockRepo.Setup(r => r.GetByEmailAsync(It.IsAny<string>(), default)).ReturnsAsync((User?)null);
+        _mockRepo.Setup(r => r.GetByUsernameAsync(It.IsAny<string>(), default)).ReturnsAsync((User)null!);
+        _mockRepo.Setup(r => r.GetByEmailAsync(It.IsAny<string>(), default)).ReturnsAsync((User)null!);
         _mockRepo.Setup(r => r.CreateAsync(It.IsAny<User>(), default)).ReturnsAsync(1);
 
         // Act
