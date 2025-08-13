@@ -1,1 +1,64 @@
-
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3709F0B8-5A74-4D6A-895D-992A743FA6C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiceDentist.Auth.Domain", "src\NiceDentist.Auth.Domain\NiceDentist.Auth.Domain.csproj", "{8922FCF2-B4CE-48FD-9587-0EADE569690B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiceDentist.Auth.Application", "src\NiceDentist.Auth.Application\NiceDentist.Auth.Application.csproj", "{86B00FC2-E831-49C3-88D3-D8D0D49BB1F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiceDentist.Auth.Infrastructure", "src\NiceDentist.Auth.Infrastructure\NiceDentist.Auth.Infrastructure.csproj", "{A45CAD00-AB50-4FB2-A519-091F8B1CFAAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiceDentist.Auth.Api", "src\NiceDentist.Auth.Api\NiceDentist.Auth.Api.csproj", "{12E7D300-F6A7-4EF3-A271-BF53A34D57AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F1A16793-CA43-47BA-B608-C81CBA4E8761}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiceDentist.Auth.Tests", "tests\NiceDentist.Auth.Tests\NiceDentist.Auth.Tests.csproj", "{2E2118A5-8B9F-48B1-9BFD-40C80E911068}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiceDentist.Auth.IntegrationTests", "tests\NiceDentist.Auth.IntegrationTests\NiceDentist.Auth.IntegrationTests.csproj", "{5EE3328E-ABF3-4ADF-95DC-30CCA2F23FAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8922FCF2-B4CE-48FD-9587-0EADE569690B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8922FCF2-B4CE-48FD-9587-0EADE569690B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8922FCF2-B4CE-48FD-9587-0EADE569690B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8922FCF2-B4CE-48FD-9587-0EADE569690B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86B00FC2-E831-49C3-88D3-D8D0D49BB1F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86B00FC2-E831-49C3-88D3-D8D0D49BB1F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86B00FC2-E831-49C3-88D3-D8D0D49BB1F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86B00FC2-E831-49C3-88D3-D8D0D49BB1F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A45CAD00-AB50-4FB2-A519-091F8B1CFAAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A45CAD00-AB50-4FB2-A519-091F8B1CFAAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A45CAD00-AB50-4FB2-A519-091F8B1CFAAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A45CAD00-AB50-4FB2-A519-091F8B1CFAAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12E7D300-F6A7-4EF3-A271-BF53A34D57AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12E7D300-F6A7-4EF3-A271-BF53A34D57AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12E7D300-F6A7-4EF3-A271-BF53A34D57AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12E7D300-F6A7-4EF3-A271-BF53A34D57AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E2118A5-8B9F-48B1-9BFD-40C80E911068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E2118A5-8B9F-48B1-9BFD-40C80E911068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E2118A5-8B9F-48B1-9BFD-40C80E911068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E2118A5-8B9F-48B1-9BFD-40C80E911068}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EE3328E-ABF3-4ADF-95DC-30CCA2F23FAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EE3328E-ABF3-4ADF-95DC-30CCA2F23FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EE3328E-ABF3-4ADF-95DC-30CCA2F23FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EE3328E-ABF3-4ADF-95DC-30CCA2F23FAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8922FCF2-B4CE-48FD-9587-0EADE569690B} = {3709F0B8-5A74-4D6A-895D-992A743FA6C7}
+		{86B00FC2-E831-49C3-88D3-D8D0D49BB1F0} = {3709F0B8-5A74-4D6A-895D-992A743FA6C7}
+		{A45CAD00-AB50-4FB2-A519-091F8B1CFAAD} = {3709F0B8-5A74-4D6A-895D-992A743FA6C7}
+		{12E7D300-F6A7-4EF3-A271-BF53A34D57AA} = {3709F0B8-5A74-4D6A-895D-992A743FA6C7}
+		{2E2118A5-8B9F-48B1-9BFD-40C80E911068} = {F1A16793-CA43-47BA-B608-C81CBA4E8761}
+		{5EE3328E-ABF3-4ADF-95DC-30CCA2F23FAA} = {F1A16793-CA43-47BA-B608-C81CBA4E8761}
+	EndGlobalSection
+EndGlobal
