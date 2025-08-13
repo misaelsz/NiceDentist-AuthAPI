@@ -2,7 +2,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using NiceDentist.Auth.Application.Auth;
 using NiceDentist.Auth.Application.Contracts;
+using NiceDentist.Auth.Application.EventHandlers;
+using NiceDentist.Auth.Application.Events;
 using NiceDentist.Auth.Infrastructure;
+using NiceDentist.Auth.Infrastructure.Messaging;
 using NiceDentist.Auth.Api;
 using System.Text;
 
@@ -13,10 +16,19 @@ var jwtKey = builder.Configuration["Jwt:Key"] ?? "dev-secret-change";
 var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "NiceDentist";
 var connectionString = builder.Configuration.GetConnectionString("AuthDb") ?? "Server=localhost;Database=NiceDentistAuthDb;Trusted_Connection=True;TrustServerCertificate=True;";
 
+// Configure RabbitMQ
+builder.Services.Configure<RabbitMqOptions>(builder.Configuration.GetSection(RabbitMqOptions.SectionName));
+
 // DI
 builder.Services.AddSingleton<IUserRepository>(_ => new SqlUserRepository(connectionString));
 builder.Services.AddSingleton<IJwtTokenService>(_ => new JwtTokenService(jwtKey, jwtIssuer));
 builder.Services.AddScoped<AuthService>();
+
+// Event handling
+builder.Services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
+builder.Services.AddScoped<IEventHandler<CustomerCreatedEvent>, CustomerCreatedEventHandler>();
+builder.Services.AddScoped<IEventHandler<DentistCreatedEvent>, DentistCreatedEventHandler>();
+builder.Services.AddHostedService<RabbitMqEventConsumer>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
