@@ -4,8 +4,16 @@ using NiceDentist.Auth.Domain;
 
 namespace NiceDentist.Auth.Api;
 
+/// <summary>
+/// Static class responsible for seeding initial data
+/// </summary>
 public static class DataSeeder
 {
+    /// <summary>
+    /// Seeds the database with initial admin user if it doesn't exist
+    /// </summary>
+    /// <param name="app">The web application instance</param>
+    /// <returns>A task representing the asynchronous operation</returns>
     public static async Task SeedAsync(this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
