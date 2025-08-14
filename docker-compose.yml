@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: ./src/NiceDentist.Auth.Api/Dockerfile
     environment:
-      - ASPNETCORE_ENVIRONMENT=${APP_ENV:-Development}
+      - ASPNETCORE_ENVIRONMENT=Docker
       - ConnectionStrings__AuthDb=Server=sqlserver,1433;Database=NiceDentistAuthDb;User Id=sa;Password=Your_strong_password123!;TrustServerCertificate=True;
       - Jwt__Key=${JWT_KEY:-please-change-in-prod-very-secret}
       - Jwt__Issuer=${JWT_ISSUER:-NiceDentist}
