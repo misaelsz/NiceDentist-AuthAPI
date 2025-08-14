@@ -31,7 +31,7 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
 
             // Add the test database repository
             var connectionString = _dbContainer.GetConnectionString();
-            services.AddSingleton<IUserRepository>(_ => new SqlUserRepository(connectionString));
+            services.AddSingleton<IUserRepository>(_ => new UserRepository(connectionString));
         });
 
         builder.UseEnvironment("Testing");
@@ -43,7 +43,7 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
         
         // Create the database schema
         var connectionString = _dbContainer.GetConnectionString();
-        var repo = new SqlUserRepository(connectionString);
+        var repo = new UserRepository(connectionString);
         
         // Initialize the database schema (you might want to create a schema setup method)
         await SetupDatabaseSchema(connectionString);

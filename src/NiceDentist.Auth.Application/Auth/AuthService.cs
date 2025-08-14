@@ -38,20 +38,20 @@ public class AuthService
         return id > 0 ? (true, "User created.") : (false, "Failed to create user.");
     }
 
-    public async Task<(bool ok, string token, string message)> LoginAsync(string username, string password, CancellationToken ct = default)
+    public async Task<(bool ok, string token, string message, User? user)> LoginAsync(string email, string password, CancellationToken ct = default)
     {
-        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
-            return (false, string.Empty, "Username and password are required.");
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            return (false, string.Empty, "Email and password are required.", null);
 
-        var user = await _users.GetByUsernameAsync(username, ct);
+        var user = await _users.GetByEmailAsync(email, ct);
         if (user == null || !user.IsActive)
-            return (false, string.Empty, "Invalid credentials.");
+            return (false, string.Empty, "Invalid credentials.", null);
 
         var valid = BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
         if (!valid)
-            return (false, string.Empty, "Invalid credentials.");
+            return (false, string.Empty, "Invalid credentials.", null);
 
         var token = _jwt.GenerateAccessToken(user);
-        return (true, token, "Login successful.");
+        return (true, token, "Login successful.", user);
     }
 }

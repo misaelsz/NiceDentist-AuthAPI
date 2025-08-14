@@ -34,9 +34,9 @@ public class AuthController : ControllerBase
     /// <summary>
     /// Request model for user login
     /// </summary>
-    /// <param name="Username">The username for login</param>
+    /// <param name="Email">The email for login</param>
     /// <param name="Password">The password for login</param>
-    public record LoginRequest(string Username, string Password);
+    public record LoginRequest(string Email, string Password);
 
     /// <summary>
     /// Registers a new user in the system
@@ -58,14 +58,22 @@ public class AuthController : ControllerBase
     /// </summary>
     /// <param name="req">The login request containing credentials</param>
     /// <param name="ct">Cancellation token</param>
-    /// <returns>JWT token on success or error message</returns>
+    /// <returns>JWT token and user info on success or error message</returns>
     [HttpPost("login")]
     [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] LoginRequest req, CancellationToken ct)
     {
-        var (ok, token, message) = await _auth.LoginAsync(req.Username, req.Password, ct);
-        if (!ok) return Unauthorized(new { message });
-        return Ok(new { token });
+        var (ok, token, message, user) = await _auth.LoginAsync(req.Email, req.Password, ct);
+        if (!ok || user == null) return Unauthorized(new { message });
+        return Ok(new { 
+            token, 
+            user = new { 
+                id = user.Id, 
+                name = user.Username, // Frontend expects 'name' but we have 'Username'
+                email = user.Email, 
+                role = user.Role 
+            } 
+        });
     }
 
     /// <summary>

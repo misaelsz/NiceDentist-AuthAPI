@@ -20,7 +20,7 @@ var connectionString = builder.Configuration.GetConnectionString("AuthDb") ?? "S
 builder.Services.Configure<RabbitMqOptions>(builder.Configuration.GetSection(RabbitMqOptions.SectionName));
 
 // DI
-builder.Services.AddSingleton<IUserRepository>(_ => new SqlUserRepository(connectionString));
+builder.Services.AddSingleton<IUserRepository>(_ => new UserRepository(connectionString));
 builder.Services.AddSingleton<IJwtTokenService>(_ => new JwtTokenService(jwtKey, jwtIssuer));
 builder.Services.AddScoped<AuthService>();
 
@@ -32,6 +32,19 @@ builder.Services.AddHostedService<RabbitMqEventConsumer>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+// Add CORS support
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000", "http://localhost:3001", "http://localhost:5173")
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
+});
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new() { Title = "NiceDentist.Auth API", Version = "v1" });
@@ -77,13 +90,17 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+// Enable CORS
+app.UseCors("AllowFrontend");
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
-if (app.Environment.IsDevelopment())
+// Seed data in development OR Docker environment
+if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
 {
     await DataSeeder.SeedAsync(app);
 }

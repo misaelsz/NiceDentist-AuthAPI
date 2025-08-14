@@ -5,10 +5,10 @@ using NiceDentist.Auth.Domain;
 
 namespace NiceDentist.Auth.Infrastructure;
 
-public class SqlUserRepository : IUserRepository
+public class UserRepository : IUserRepository
 {
     private readonly string _connectionString;
-    public SqlUserRepository(string connectionString)
+    public UserRepository(string connectionString)
     {
         _connectionString = connectionString;
     }

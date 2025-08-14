@@ -16,14 +16,14 @@ public class SqlUserRepositoryIntegrationTests : IAsyncLifetime
         .WithCleanUp(true)
         .Build();
 
-    private SqlUserRepository _repository = null!;
+    private UserRepository _repository = null!;
     private string _connectionString = null!;
 
     public async Task InitializeAsync()
     {
         await _dbContainer.StartAsync();
         _connectionString = _dbContainer.GetConnectionString();
-        _repository = new SqlUserRepository(_connectionString);
+        _repository = new UserRepository(_connectionString);
         
         await SetupDatabaseSchema();
     }
