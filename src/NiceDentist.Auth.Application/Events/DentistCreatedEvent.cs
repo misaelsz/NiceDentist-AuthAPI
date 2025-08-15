@@ -9,7 +9,7 @@ public class DentistCreatedEvent : BaseEvent
     /// <summary>
     /// Type identifier for the event
     /// </summary>
-    public override string EventType => "DentistCreated";
+    public override string EventType => "dentistcreated";
     
     /// <summary>
     /// Dentist data from Manager API
