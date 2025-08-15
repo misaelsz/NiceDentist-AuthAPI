@@ -114,51 +114,54 @@ public class AuthServiceTests
     }
 
     [Theory]
-    [InlineData("", "password", "Username and password are required.")]
-    [InlineData("user", "", "Username and password are required.")]
-    [InlineData(null, "password", "Username and password are required.")]
-    public async Task LoginAsync_ShouldReturnError_WhenInvalidInput(string username, string password, string expectedMessage)
+    [InlineData("", "password", "Email and password are required.")]
+    [InlineData("user", "", "Email and password are required.")]
+    [InlineData(null, "password", "Email and password are required.")]
+    public async Task LoginAsync_ShouldReturnError_WhenInvalidInput(string email, string password, string expectedMessage)
     {
         // Act
-        var (ok, token, message) = await _authService.LoginAsync(username, password);
+        var (ok, token, message, user) = await _authService.LoginAsync(email, password);
 
         // Assert
         ok.Should().BeFalse();
         token.Should().BeEmpty();
         message.Should().Be(expectedMessage);
+        user.Should().BeNull();
     }
 
     [Fact]
     public async Task LoginAsync_ShouldReturnError_WhenUserNotFound()
     {
         // Arrange
-        _mockRepo.Setup(r => r.GetByUsernameAsync("nonexistent", default))
+        _mockRepo.Setup(r => r.GetByEmailAsync("nonexistent@example.com", default))
                .ReturnsAsync((User)null!);
 
         // Act
-        var (ok, token, message) = await _authService.LoginAsync("nonexistent", "password");
+        var (ok, token, message, user) = await _authService.LoginAsync("nonexistent@example.com", "password");
 
         // Assert
         ok.Should().BeFalse();
         token.Should().BeEmpty();
         message.Should().Be("Invalid credentials.");
+        user.Should().BeNull();
     }
 
     [Fact]
     public async Task LoginAsync_ShouldReturnError_WhenUserInactive()
     {
         // Arrange
-        var inactiveUser = new User { Username = "inactive", IsActive = false };
-        _mockRepo.Setup(r => r.GetByUsernameAsync("inactive", default))
+        var inactiveUser = new User { Username = "inactive", Email = "inactive@example.com", IsActive = false };
+        _mockRepo.Setup(r => r.GetByEmailAsync("inactive@example.com", default))
                .ReturnsAsync(inactiveUser);
 
         // Act
-        var (ok, token, message) = await _authService.LoginAsync("inactive", "password");
+        var (ok, token, message, user) = await _authService.LoginAsync("inactive@example.com", "password");
 
         // Assert
         ok.Should().BeFalse();
         token.Should().BeEmpty();
         message.Should().Be("Invalid credentials.");
+        user.Should().BeNull();
     }
 
     [Fact]
@@ -169,19 +172,21 @@ public class AuthServiceTests
         var user = new User 
         { 
             Username = "testuser", 
+            Email = "testuser@example.com",
             PasswordHash = hashedPassword, 
             IsActive = true 
         };
-        _mockRepo.Setup(r => r.GetByUsernameAsync("testuser", default))
+        _mockRepo.Setup(r => r.GetByEmailAsync("testuser@example.com", default))
                .ReturnsAsync(user);
 
         // Act
-        var (ok, token, message) = await _authService.LoginAsync("testuser", "wrongpassword");
+        var (ok, token, message, resultUser) = await _authService.LoginAsync("testuser@example.com", "wrongpassword");
 
         // Assert
         ok.Should().BeFalse();
         token.Should().BeEmpty();
         message.Should().Be("Invalid credentials.");
+        resultUser.Should().BeNull();
     }
 
     [Fact]
@@ -198,18 +203,20 @@ public class AuthServiceTests
             Role = "Customer",
             IsActive = true 
         };
-        _mockRepo.Setup(r => r.GetByUsernameAsync("testuser", default))
+        _mockRepo.Setup(r => r.GetByEmailAsync("test@example.com", default))
                .ReturnsAsync(user);
         _mockJwt.Setup(j => j.GenerateAccessToken(user))
               .Returns("valid-jwt-token");
 
         // Act
-        var (ok, token, message) = await _authService.LoginAsync("testuser", "correctpassword");
+        var (ok, token, message, resultUser) = await _authService.LoginAsync("test@example.com", "correctpassword");
 
         // Assert
         ok.Should().BeTrue();
         token.Should().Be("valid-jwt-token");
         message.Should().Be("Login successful.");
+        resultUser.Should().NotBeNull();
+        resultUser!.Username.Should().Be("testuser");
         
         // Verify JWT service was called with correct user
         _mockJwt.Verify(j => j.GenerateAccessToken(user), Times.Once);
@@ -237,14 +244,15 @@ public class AuthServiceTests
         // Arrange
         var hash = BCrypt.Net.BCrypt.HashPassword("Pass123!");
         var user = new User { Id = 1, Username = "ana", Email = "ana@example.com", PasswordHash = hash, Role = "Admin", IsActive = true };
-        _mockRepo.Setup(r => r.GetByUsernameAsync("ana", default)).ReturnsAsync(user);
+        _mockRepo.Setup(r => r.GetByEmailAsync("ana@example.com", default)).ReturnsAsync(user);
         _mockJwt.Setup(j => j.GenerateAccessToken(It.IsAny<User>())).Returns("token");
 
         // Act
-        var (ok, token, _) = await _authService.LoginAsync("ana", "Pass123!");
+        var (ok, token, _, resultUser) = await _authService.LoginAsync("ana@example.com", "Pass123!");
 
         // Assert
         ok.Should().BeTrue();
         token.Should().NotBeNullOrEmpty();
+        resultUser.Should().NotBeNull();
     }
 }
